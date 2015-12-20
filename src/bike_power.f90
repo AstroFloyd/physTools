@@ -22,7 +22,7 @@ program bike_power
   call physTools_init(.true.)
   
   nArg = command_argument_count()
-  if(nArg.lt.1 .or. nArg.gt.3) call syntax_quit('<speed (km/h)> [<distance (km)>] [<weight (kg)>]', 0, &
+  if(nArg.lt.1 .or. nArg.gt.4) call syntax_quit('<speed (km/h)> [<distance (km)>] [<weight (kg)>] [slope (%)]', 0, &
        'Estimate the power and energy used to bike a given distance with a given velocity')  ! 0: Don't print "***  (STOP) 1"
   
   
@@ -30,13 +30,14 @@ program bike_power
   speed = 30.d0  ! km/h
   dist  = 50.d0  ! km
   mass  = 100    ! kg
-  slope = 0.d0   ! fraction
+  slope = 0.d0   ! %
   
   ! Read command-line variables:
   call get_command_argument_d(1, speed)
   if(nArg.ge.2) call get_command_argument_d(2, dist)
   if(nArg.ge.3) call get_command_argument_d(3, mass)
-  
+  if(nArg.ge.4) call get_command_argument_d(4, slope)
+  slope = slope/100.d0  ! % -> fraction
   
   dist = dist * 1000     ! km -> m
   Vair = speed/3.6d0     ! km/h -> m/s
@@ -49,11 +50,12 @@ program bike_power
   write(*,'(A,F7.1,A)')                ' Speed:             ', speed, ' km/h'
   if(nArg.ge.2) write(*,'(A,F7.1,A)')  ' Distance:          ', dist/1000.d0, ' km'
   write(*,'(A,F7.1,A)')                ' Mass:              ', mass, ' kg'
+  write(*,'(A,F7.1,A)')                ' Slope:             ', slope*100, ' %'
   write(*,*)
   write(*,'(A,F7.1,A)')                ' Total power:       ', Ptot, ' W'
   write(*,'(A,F7.1,A)')                ' Mechanical power:  ', Pmech, ' W  ('//dbl2str(Pmech/Ptot*100,1)//'%)'
   write(*,'(A,F7.1,A)')                ' Air resistance:    ', Pair, ' W  ('//dbl2str(Pair/Ptot*100,1)//'%)'
-  !write(*,'(A,F7.1,A)') ' Climbing power:    ', Pclimb, ' W'
+  if(nArg.ge.4) write(*,'(A,F7.1,A)')                ' Climbing power:    ', Pclimb, ' W'
   write(*,*)
   
   if(nArg.ge.2) then  ! Have distance, can compute energy:
