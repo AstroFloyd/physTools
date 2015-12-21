@@ -6,7 +6,6 @@
 
 program bike_power
   use SUFR_kinds, only: double
-  use SUFR_constants, only: set_SUFR_constants
   use SUFR_system, only: syntax_quit
   use SUFR_command_line, only: get_command_argument_d
   use SUFR_statistics, only: median
@@ -19,7 +18,7 @@ program bike_power
   integer :: nArg
   real(double) :: mass, slope, speed,dist,time, Vair,Vground,  Pmech,Pair,Pclimb, Ptot, Ebike,Ebody
   
-  call physTools_init(.true.)
+  call physTools_init(.true.)  ! Initialise physTools and libSUFR
   
   nArg = command_argument_count()
   if(nArg.lt.1 .or. nArg.gt.4) call syntax_quit('<speed (km/h)> [<distance (km)>] [<weight (kg)>] [slope (%)]', 0, &

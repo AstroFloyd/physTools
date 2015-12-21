@@ -1,0 +1,42 @@
+!> \file  binoculars.f90:  Properties of AxB binoculars
+
+!***********************************************************************************************************************************
+!> \brief  Properties of binoculars
+
+program binoculars
+  use SUFR_kinds, only: double
+  use SUFR_system, only: syntax_quit
+  use SUFR_command_line, only: get_command_argument_d
+  use SUFR_text, only: d2s
+  use PT_general, only: physTools_init
+  
+  implicit none
+  real(double) :: mag, obj, pup,expup, llost,lgain
+  
+  call physTools_init(.true.)  ! Initialise physTools and libSUFR
+  
+  select case(command_argument_count())
+  case(2)
+     call get_command_argument_d(1, mag)
+     call get_command_argument_d(2, obj)
+  case default
+     call syntax_quit('<magnification>  <diameter objective (mm)>', 0, 'Compute properties of "MxD" binoculars')
+  end select
+  
+  pup = 7.d0       ! Average pupil for dark-adapted young adult ~7mm (5-9mm?), smaller for older people
+  expup = obj/mag
+  llost = (1.d0 - min((pup/expup)**2, 1.d0)) * 100
+  lgain = (obj/pup)**2
+  
+  write(*,*)
+  write(*,'(A,T30,A,A)') '  Magnification: ',       d2s(mag,1),' x'
+  write(*,'(A,T30,A,A)') '  Diameter objective: ',  d2s(obj,1),' mm'
+  write(*,'(A,T30,A,A)') '  Exit pupil: ',          d2s(expup,1),' mm'
+  write(*,'(A,T30,A,A)') '  Light lost: ',          d2s(llost,1),' %'
+  write(*,'(A,T30,A,A)') '  Light gain: ',          d2s(lgain,1),' x'
+  write(*,'(A,T30,A,A)') '  Light gain: ',          d2s(2.5*log10(lgain),1),' mag'
+  write(*,*)
+  
+end program binoculars
+!***********************************************************************************************************************************
+
