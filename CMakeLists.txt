@@ -84,7 +84,7 @@ target_link_libraries( Pt  ${LibSUFR_LIBRARIES} )  # link libSUFR to libPt.a
 
 # List of programs to compile:
 set( PT_PROGRAMS 
-  bike_power binoculars
+  bike_power binoculars distance_on_earth
   )
 
 
