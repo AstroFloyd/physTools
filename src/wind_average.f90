@@ -82,9 +82,9 @@ program wind_average
   wd = rev(atan2(wvy,wvx))*r2d
   
   
-  write(*,'(/,A,F8.2,A5,F10.2)', advance='no') '  Average wind vector:            ',wd,wdstr_ens(wd*d2r),wv
+  write(*,'(/,A,F8.2,A5,F10.2)', advance='no')      '  Average wind vector:            ', wd, wdstr_ens(wd*d2r), wv
   if(abs(wv).lt.1.d-9) write(*,'(A)', advance='no') ',  i.e. the average wind direction cannot be determined since the vector = 0'
-  write(*,'(/,A,13x,F10.2,/)')     '  Average absolute wind velocity: ',wvabs
+  write(*,'(/,A,13x,F10.2,/)')                      '  Average absolute wind velocity: ', wvabs
   
 end program wind_average
 !***********************************************************************************************************************************
