@@ -84,7 +84,7 @@ target_link_libraries( Pt  ${LibSUFR_LIBRARIES} )  # link libSUFR to libPt.a
 
 # List of programs to compile:
 set( PT_PROGRAMS 
-  bike_power binoculars dewpoint distance_on_earth wind_average
+  bike_power binoculars dewpoint distance_on_earth humidity_rel2abs wind_average
   )
 
 
