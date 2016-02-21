@@ -63,7 +63,7 @@ program bike_power
      Ebody = Ebike / (0.24d0 * 4.1868d0)  ! 24% efficient, kJ -> kcal
      write(*,'(A,A)')      ' Biking time:                      ', hms(time)
      write(*,'(A,F7.1,A)') ' Total energy provided to bike:  ', Ebike, ' kJ'
-     write(*,'(A,F7.1,A)') ' Total energy provided to bike:  ', Ebody, ' kcal'
+     write(*,'(A,F7.1,A)') ' Total energy burnt by body:     ', Ebody, ' kcal  (assuming 24% efficiency)'
      write(*,*)
   end if
   
